@@ -85,6 +85,19 @@ DATABASES = {
     }
 }
 
+# 2. El "Interruptor" para Producción
+# Si el sistema encuentra la variable 'DB_ENGINE' con valor mysql (que se pondrá en el servidor),
+# entonces sobrescribe la configuración para usar MySQL.
+if os.getenv('DB_ENGINE') == 'django.db.backends.mysql':
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT', '3306'),
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
